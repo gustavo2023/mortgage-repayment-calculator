@@ -14,6 +14,9 @@
 }
 
 :root {
+  --lime: hsl(61, 70%, 52%);
+  --red: hsl(4, 69%, 50%);
+  --white: hsl(0, 0%, 100%);
   --slate-100: hsl(202, 86%, 94%);
   --slate-300: hsl(203, 41%, 72%);
   --slate-500: hsl(200, 26%, 54%);
@@ -23,6 +26,318 @@
   --jakarta-plus-ff: "Plus Jakarta Sans", sans-serif;
 }
 
-h1 {
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: var(--jakarta-plus-ff);
+  background-color: var(--slate-100);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Form Styles */
+.mortgage-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.mortgage-form__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.mortgage-form__header h1 {
+  color: var(--slate-900);
+  font-size: 1.5rem;
+}
+
+.mortgage-form__clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--slate-500);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: var(--jakarta-plus-ff);
+  font-size: 1rem;
+}
+
+.mortgage-form__clear-btn:hover {
+  color: var(--slate-700);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group__label {
+  color: var(--slate-700);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.form-group__control {
+  display: flex;
+  border: 1px solid var(--slate-500);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.form-group__control:hover {
+  border-color: var(--slate-900);
+}
+
+.form-group__control:focus-within {
+  border-color: var(--lime);
+}
+
+.form-group__control--error {
+  border-color: var(--red);
+}
+
+.form-group__control--reverse {
+  flex-direction: row-reverse;
+}
+
+.form-group__symbol {
+  background-color: var(--slate-100);
+  color: var(--slate-700);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group__symbol--error {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.form-group__input {
+  width: 100%;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-family: var(--jakarta-plus-ff);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--slate-900);
+  outline: none;
+}
+
+.form-group__error-msg {
+  color: var(--red);
+  font-size: 0.875rem;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.radio-group__label {
+  color: var(--slate-700);
+  font-weight: 500;
+}
+
+.radio-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--slate-500);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.radio-option:hover {
+  border-color: var(--lime);
+}
+
+.radio-option--selected {
+  background-color: hsla(61, 70%, 52%, 0.15);
+  border-color: var(--lime);
+}
+
+.radio-option__input {
+  accent-color: var(--lime);
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.radio-option__text {
+  color: var(--slate-900);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.radio-group__error-msg {
+  color: var(--red);
+  font-size: 0.875rem;
+}
+
+/* Button */
+.calculate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: var(--lime);
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  font-family: var(--jakarta-plus-ff);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--slate-900);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 1rem;
+}
+
+.calculate-btn:hover {
+  opacity: 0.9;
+}
+
+/* Results Panel */
+.results-panel {
+  background-color: var(--slate-900);
+  color: var(--white);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.results-panel--empty {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.empty-state__img {
+  margin-bottom: 1rem;
+}
+
+.empty-state__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state__text {
+  color: var(--slate-300);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 35ch;
+}
+
+.results-panel--completed .results-panel__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.results-panel__descripion {
+  color: var(--slate-300);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  max-width: 40ch;
+}
+
+.result-card {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border-top: 4px solid var(--lime);
+}
+
+.result-card__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result-card__label {
+  color: var(--slate-300);
+  font-size: 1rem;
+}
+
+.result-card__amount {
+  font-weight: 700;
+  color: var(--white);
+}
+
+.result-card__amount--large {
+  font-size: 3.5rem;
+  color: var(--lime);
+  line-height: 1.1;
+}
+
+.result-card__amount--total {
+  font-size: 1.5rem;
+}
+
+.result-card__divider {
+  border: 0;
+  border-top: 1px solid var(--slate-700);
+  margin: 2rem 0;
+}
+
+@media (min-width: 768px) {
+  main {
+    flex-direction: row;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .mortgage-form {
+    padding: 2.5rem;
+  }
+
+  .mortgage-form__header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mortgage-form__input-row {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .mortgage-form__input-row > * {
+    flex: 1;
+  }
+
+  .results-panel {
+    padding: 2.5rem;
+    border-bottom-left-radius: 5rem;
+  }
 }
