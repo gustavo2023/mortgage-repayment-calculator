@@ -185,10 +185,54 @@ function MortgageForm({ calculateMortgage }) {
   );
 }
 
+function ResultsPanel({ results }) {
+  return results ? (
+    <div className="results-panel results-panel--completed">
+      <h2 className="results-panel__title">Your results</h2>
+      <p className="results-panel__descripion">
+        Your results are shown below based on the information you provided. To
+        adjust the results, edit the form and click "calculate epayments" again.
+      </p>
+
+      <div className="result-card">
+        <div className="result-card__section">
+          <p className="result-card__label">Your monthly repayments</p>
+          <p className="result-card__amount result-card__amount--large">
+            {results.monthlyPayment}
+          </p>
+        </div>
+
+        <hr className="result-card__divider" />
+
+        <div className="result-card__section">
+          <p className="result-card__label">Total you'll repay over the term</p>
+          <p className="result-card__amount result-card__amount--total">
+            {results.totalRepayment}
+          </p>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="results-panel results-panel--empty">
+      <img
+        src="/images/illustration-empty.svg"
+        alt="Calculator illustration"
+        className="empty-state__img"
+      />
+      <h2 className="empty-state__title">Results shown here</h2>
+      <p className="empty-state__text">
+        Complete the form and click “calculate repayments” to see what your
+        monthly repayments would be.
+      </p>
+    </div>
+  );
+}
+
 function App() {
   return (
     <div className="App">
       <MortgageForm calculateMortgage={() => {}} />
+      <ResultsPanel results={null} />
     </div>
   );
 }
