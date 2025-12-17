@@ -185,9 +185,35 @@ main {
 }
 
 .radio-option__input {
-  accent-color: var(--lime);
+  appearance: none;
+  -webkit-appearance: none;
   width: 1.25rem;
   height: 1.25rem;
+  border: 1px solid var(--slate-700);
+  border-radius: 50%;
+  background-color: var(--white);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  margin: 0;
+}
+
+.radio-option__input::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background-color: var(--lime);
+  transform: scale(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.radio-option__input:checked {
+  border-color: var(--lime);
+}
+
+.radio-option__input:checked::before {
+  transform: scale(1);
 }
 
 .radio-option__text {
