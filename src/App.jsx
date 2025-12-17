@@ -79,7 +79,7 @@ function RadioGroup({ label, selectedValue, onChange, error }) {
   );
 }
 
-function MortgageForm({ calculateMortgage }) {
+function MortgageForm({ calculateMortgage, onClear }) {
   const [formData, setFormData] = useState({
     amount: "",
     mortgageTerm: "",
@@ -105,6 +105,7 @@ function MortgageForm({ calculateMortgage }) {
       mortgageType: "",
     });
     setErrors({});
+    onClear();
   }
 
   const handleSubmit = (e) => {
@@ -229,10 +230,55 @@ function ResultsPanel({ results }) {
 }
 
 function App() {
+  const [results, setResults] = useState(null);
+
+  function clearResults() {
+    setResults(null);
+  }
+
+  function calculateMortgage(formData) {
+    const principal = parseFloat(formData.amount);
+    const termYears = parseFloat(formData.mortgageTerm);
+    const ratePercent = parseFloat(formData.interestRate);
+    const type = formData.mortgageType;
+
+    let monthlyPayment = 0;
+    let totalRepayment = 0;
+
+    if (type === "repayment") {
+      const monthlyRate = ratePercent / 100 / 12;
+      const n = termYears * 12;
+
+      monthlyPayment =
+        (principal * monthlyRate * Math.pow(1 + monthlyRate, n)) /
+        (Math.pow(1 + monthlyRate, n) - 1);
+
+      totalRepayment = monthlyPayment * n;
+    } else {
+      monthlyPayment = (principal * (ratePercent / 100)) / 12;
+      totalRepayment = monthlyPayment * termYears * 12 + principal;
+    }
+
+    // Format currency and update state
+    const formatter = new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      minimumFractionDigits: 2,
+    });
+
+    setResults({
+      monthlyPayment: formatter.format(monthlyPayment),
+      totalRepayment: formatter.format(totalRepayment),
+    });
+  }
+
   return (
     <div className="App">
-      <MortgageForm calculateMortgage={() => {}} />
-      <ResultsPanel results={null} />
+      <MortgageForm
+        calculateMortgage={calculateMortgage}
+        onClear={clearResults}
+      />
+      <ResultsPanel results={results} />
     </div>
   );
 }
