@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classNames from "classnames";
 import "./App.css";
 
@@ -78,8 +79,118 @@ function RadioGroup({ label, selectedValue, onChange, error }) {
   );
 }
 
+function MortgageForm({ calculateMortgage }) {
+  const [formData, setFormData] = useState({
+    amount: "",
+    mortgageTerm: "",
+    interestRate: "",
+    mortgageType: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  function handleChange(field, value) {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  }
+
+  function handleClear() {
+    setFormData({
+      amount: "",
+      mortgageTerm: "",
+      interestRate: "",
+      mortgageType: "",
+    });
+    setErrors({});
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!formData.amount) newErrors.amount = "This field is required";
+    if (!formData.mortgageTerm)
+      newErrors.mortgageTerm = "This field is required";
+    if (!formData.interestRate)
+      newErrors.interestRate = "This field is required";
+    if (!formData.mortgageType)
+      newErrors.mortgageType = "This field is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      calculateMortgage(formData);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mortgage-form">
+      <div className="mortgage-form__header">
+        <h1>Mortgage Calculator</h1>
+        <button
+          type="button"
+          onClick={handleClear}
+          className="mortgage-form__clear-btn"
+        >
+          Clear All
+        </button>
+      </div>
+
+      <FormInputGroup
+        id="mortgageAmount"
+        label="Mortgage Amount"
+        value={formData.amount}
+        onChange={(e) => handleChange("amount", e.target.value)}
+        error={errors.amount}
+        symbol="£"
+      />
+
+      <FormInputGroup
+        id="mortgageTerm"
+        label="Mortgage Term"
+        value={formData.mortgageTerm}
+        onChange={(e) => handleChange("mortgageTerm", e.target.value)}
+        error={errors.mortgageTerm}
+        symbol="years"
+        symbolPosition="right"
+      />
+
+      <FormInputGroup
+        id="interestRate"
+        label="Interest Rate"
+        value={formData.interestRate}
+        onChange={(e) => handleChange("interestRate", e.target.value)}
+        error={errors.interestRate}
+        symbol="%"
+        symbolPosition="right"
+      />
+
+      <RadioGroup
+        label="Mortgage Type"
+        selectedValue={formData.mortgageType}
+        onChange={(value) => handleChange("mortgageType", value)}
+        error={errors.mortgageType}
+      />
+
+      <button type="submit" className="calculate-btn">
+        <span>
+          <img src="/images/icon-calculator.svg" alt="Calculator icon" />
+        </span>
+        <span>Calculate Repayments</span>
+      </button>
+    </form>
+  );
+}
+
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <MortgageForm calculateMortgage={() => {}} />
+    </div>
+  );
 }
 
 export default App;
