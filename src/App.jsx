@@ -149,25 +149,27 @@ function MortgageForm({ calculateMortgage, onClear }) {
         symbol="£"
       />
 
-      <FormInputGroup
-        id="mortgageTerm"
-        label="Mortgage Term"
-        value={formData.mortgageTerm}
-        onChange={(e) => handleChange("mortgageTerm", e.target.value)}
-        error={errors.mortgageTerm}
-        symbol="years"
-        symbolPosition="right"
-      />
+      <div className="mortgage-form__input-row">
+        <FormInputGroup
+          id="mortgageTerm"
+          label="Mortgage Term"
+          value={formData.mortgageTerm}
+          onChange={(e) => handleChange("mortgageTerm", e.target.value)}
+          error={errors.mortgageTerm}
+          symbol="years"
+          symbolPosition="right"
+        />
 
-      <FormInputGroup
-        id="interestRate"
-        label="Interest Rate"
-        value={formData.interestRate}
-        onChange={(e) => handleChange("interestRate", e.target.value)}
-        error={errors.interestRate}
-        symbol="%"
-        symbolPosition="right"
-      />
+        <FormInputGroup
+          id="interestRate"
+          label="Interest Rate"
+          value={formData.interestRate}
+          onChange={(e) => handleChange("interestRate", e.target.value)}
+          error={errors.interestRate}
+          symbol="%"
+          symbolPosition="right"
+        />
+      </div>
 
       <RadioGroup
         label="Mortgage Type"
@@ -273,13 +275,13 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <main>
       <MortgageForm
         calculateMortgage={calculateMortgage}
         onClear={clearResults}
       />
       <ResultsPanel results={results} />
-    </div>
+    </main>
   );
 }
 
